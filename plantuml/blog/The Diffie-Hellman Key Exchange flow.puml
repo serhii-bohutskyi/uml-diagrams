@@ -1,0 +1,18 @@
+@startuml
+actor Alice
+actor Bob
+entity "Public Info\n(p, g)" as PublicInfo
+
+Alice -> PublicInfo: Obtain Public Parameters (p, g)
+Bob -> PublicInfo: Obtain Public Parameters (p, g)
+
+note right of Alice: Choose private key a\nCompute A = g^a mod p
+note left of Bob: Choose private key b\nCompute B = g^b mod p
+
+Alice -> Bob: Send A
+Bob -> Alice: Send B
+
+note right of Alice: Compute shared key\ns = B^a mod p
+note left of Bob: Compute shared key\ns = A^b mod p
+
+@enduml
