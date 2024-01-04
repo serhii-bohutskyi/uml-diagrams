@@ -1,0 +1,30 @@
+@startuml
+!theme bluegray
+hide circle
+
+scale 2
+
+skinparam backgroundColor white
+
+
+actor "Sender" as Sender
+actor "Receiver" as Receiver
+entity "JWT Service" as JWTService
+
+
+Sender -> JWTService : Request JWT\n(Provide Data)
+JWTService -> JWTService : Generate JWT\n(Encode & Sign Data)
+JWTService -> Sender : Return JWT
+
+note right of Sender : JWT contains\nencrypted information
+Sender -> Receiver : Send JWT
+
+Receiver -> JWTService : Validate JWT\n(Decode & Verify)
+alt JWT Valid
+    JWTService -> Receiver : Decoded Data\n(Information Extracted)
+    note right of Receiver : Use Extracted Information
+else JWT Invalid
+    JWTService -> Receiver : Invalid Token\n(Access Denied)
+    note right of Receiver : Reject or Request Resend
+end
+@enduml
