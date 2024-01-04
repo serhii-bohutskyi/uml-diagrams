@@ -1,0 +1,27 @@
+@startuml
+!theme carbon-gray
+
+hide circle
+
+scale 5
+
+skinparam backgroundColor white
+
+
+!define RECTANGLE class
+
+RECTANGLE "Benefits of SOA" as Benefits {
+    + **Flexibility**: Adapts to business changes
+    + **Scalability**: Supports horizontal scaling
+    + **Reusability**: Saves time and resources
+    + **Faster time-to-market**: Quicker development
+    + **Easier maintenance**: Simplified updates
+}
+
+RECTANGLE "Drawbacks of SOA" as Drawbacks {
+    - **Complexity**: Challenges in orchestration
+    - **Performance overhead**: Extra processing
+    - **Security concerns**: Risks in public APIs
+}
+
+@enduml
