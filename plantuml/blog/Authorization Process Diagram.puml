@@ -1,0 +1,19 @@
+@startuml
+!theme aws-orange
+
+scale 2
+
+skinparam backgroundColor white
+
+mainframe <font color=darkslategrey>Authentication Process Diagram</font>
+
+actor User
+participant  "Authorization \nServer" as AuthServer
+participant "Resource" as Resource
+
+User -> AuthServer : Requests Access\nto Resource
+AuthServer -> AuthServer : Checks User\nPermissions
+AuthServer -> User : Access\nGranted or Denied
+User -> Resource : Access Resource\n(if granted)
+
+@enduml
