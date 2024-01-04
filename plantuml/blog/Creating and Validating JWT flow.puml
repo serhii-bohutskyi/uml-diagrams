@@ -1,0 +1,26 @@
+@startuml
+!theme bluegray
+hide circle
+
+scale 2
+
+skinparam backgroundColor white
+
+actor Client as User
+entity "JWT Creation" as Creation
+entity "JWT Storage" as Storage
+entity "JWT Validation" as Validation
+User -> Creation : Request JWT\n(Provide Credentials)
+Creation -> Storage : Generate JWT\n(Encode Header, Payload; Sign)
+Storage -> User : Return JWT
+User -> User : Store JWT Locally
+User -> Validation : Access Protected Resource\n(Send JWT)
+Validation -> Storage : Verify JWT\n(Decode, Check Signature)
+alt Valid JWT
+    Storage -> Validation : JWT Valid
+    Validation -> User : Access Granted
+else Invalid JWT
+    Storage -> Validation : JWT Invalid
+    Validation -> User : Access Denied
+end
+@enduml
