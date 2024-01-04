@@ -1,0 +1,40 @@
+@startuml
+!theme cerulean
+skinparam backgroundColor white
+
+mainframe <font color=darkslategrey>OAuth 2.0 Flow</font>
+
+scale 2
+
+actor User as user
+actor "Resource Owner" as resOwner
+participant "Client\nApplication" as client
+participant "Authorization\nServer" as authServer
+participant "Resource\nServer" as resourceServer
+
+user -> client: Request Resource
+activate client
+
+client -> authServer: Redirect to Auth Server\n(redirectUri, scope, response_type=code, client_id)
+activate authServer
+
+note over resOwner: User Authenticates\nand Grants Consent
+
+authServer -> resOwner: Authentication & Consent
+authServer -> client: Authorization Code (code)
+deactivate authServer
+
+client -> authServer: Request Access Token\n(code, client_id, client_secret, redirect_uri, grant_type=authorization_code)
+activate authServer
+
+authServer -> client: Access Token (token)
+deactivate authServer
+
+client -> resourceServer: Request Resource\n(Authorization: Bearer token)
+activate resourceServer
+
+resourceServer -> client: Protected Resource
+client -> user: Provide Resource 
+deactivate client
+deactivate resourceServer
+@enduml
