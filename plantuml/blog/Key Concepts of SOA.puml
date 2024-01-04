@@ -1,0 +1,43 @@
+@startuml
+!theme aws-orange
+
+hide circle
+
+scale 2
+
+skinparam backgroundColor white
+
+
+!define SERVICE class
+!define INTERFACE class
+
+SERVICE "Services" as Services {
+    + encapsulate specific functionality
+    + can be combined to create applications
+}
+
+SERVICE "Loose Coupling" as LooseCoupling {
+    + minimize dependencies
+}
+
+SERVICE "Reusability" as Reusability {
+    + standardized components
+    + share across applications
+}
+
+SERVICE "Interoperability" as Interoperability {
+    + standard protocols
+    + universal message formats
+}
+
+INTERFACE "Service Contract" as ServiceContract {
+    + define service interfaces (APIs)
+    + specify inputs/outputs
+    + communication protocols
+}
+
+Services -down-> LooseCoupling : "enables"
+LooseCoupling -down-> Reusability : "facilitates"
+Reusability -down-> Interoperability : "supports"
+Interoperability -right-> ServiceContract : "defined by"
+@enduml
