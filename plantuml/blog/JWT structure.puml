@@ -13,8 +13,8 @@ RECTANGLE(Header)
 RECTANGLE(Payload)
 RECTANGLE(Signature)
 
-Header : {alg: HS256, typ: JWT, cty: "application/json", kid: "key1234"}
-Payload : {iss: "issuer", sub: "subject", aud: "audience",\n exp: 1516239022, nbf: 1516235422, iat: 1516235722,\n jti: "token12345", name: "John Doe", admin: true}
+Header : {alg: HS256\n    typ: JWT\n    cty: "application/json"\n    kid: "key1234"}
+Payload : {\n    iss: "issuer",\n    sub: "subject",\n    aud: "audience",\n    exp: 1516239022,\n    nbf: 1516235422,\n    iat: 1516235722,\n    jti: "token12345",\n    name: "John Doe",\n    admin: true\n}
 Signature : Encoded Signature
 
 Header -right- Payload
