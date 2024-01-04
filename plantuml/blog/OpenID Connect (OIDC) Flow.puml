@@ -1,0 +1,46 @@
+@startuml
+!theme bluegray
+skinparam backgroundColor white
+
+scale 2
+
+title OpenID Connect (OIDC) Flow
+
+actor User as user
+participant "Client\nApplication" as client
+participant "Authorization\nServer" as authServer
+participant "Resource\nServer" as resourceServer
+
+' User initiates login process
+user -> client: **Initiate Login**
+
+' Client redirects User to Authorization Server with detailed request
+client -> authServer: **Redirect for Authentication**\n(client_id, redirect_uri, response_type, scope=openid)
+
+' User authenticates and provides consent at Authorization Server
+note right of user: User Authenticates\nand Provides Consent
+authServer -> user: **Authentication & Conset**
+
+group ID Token & Access Token
+authServer -> client: **Redirect with Authorization Code**\n(redirect_uri, code)
+
+' Client requests tokens from Authorization Server
+client -> authServer: **Request Tokens**\n(client_id, client_secret, code, redirect_uri, grant_type=authorization_code)
+authServer -> client: **ID Token and Access Token**
+end 
+
+group Resource Access
+' Client uses Access Token to request resource from Resource Server
+client -> resourceServer: **Request Protected Resource**\n(Authorization: Bearer Access Token)
+resourceServer -> client: **Protected Resource**
+end 
+
+group UserInfo endpoint
+' Client sends request to UserInfo endpoint
+client -> authServer: **Request User Info**\n(Authorization: Bearer Access Token)
+authServer -> client: **User Information**
+end 
+
+' Client authenticates User based on ID Token and User Info
+client -> client: **Authenticate User**\n(Using ID Token & User Info)
+@enduml
