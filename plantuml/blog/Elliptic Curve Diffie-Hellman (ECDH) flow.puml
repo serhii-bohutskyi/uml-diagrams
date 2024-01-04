@@ -1,0 +1,22 @@
+@startuml
+mainframe Elliptic Curve Diffie-Hellman (ECDH) flow
+
+participant "Alice\n(Private Key a)" as Alice
+participant "Bob\n(Private Key b)" as Bob
+participant "Public Info\n(Elliptic Curve, Base Point G)" as PublicInfo
+
+note right of Alice: Choose private key 'a' randomly
+note left of Bob: Choose private key 'b' randomly
+
+Alice -> PublicInfo: Obtain Public Parameters
+Bob -> PublicInfo: Obtain Public Parameters
+
+note right of Alice: Generate Public Key A:\nA = a * G
+note left of Bob: Generate Public Key B:\nB = b * G
+
+Alice -> Bob: Send Public Key A
+Bob -> Alice: Send Public Key B
+
+note right of Alice: Compute Shared Secret:\ns = a * B
+note left of Bob: Compute Shared Secret:\ns = b * A
+@enduml
