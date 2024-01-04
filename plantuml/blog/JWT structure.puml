@@ -1,0 +1,22 @@
+@startuml
+!theme black-knight
+
+hide circle
+
+scale 2
+
+skinparam backgroundColor white
+
+!define RECTANGLE(x) class x << (R,orchid) >>
+
+RECTANGLE(Header)
+RECTANGLE(Payload)
+RECTANGLE(Signature)
+
+Header : {alg: HS256, typ: JWT, cty: "application/json", kid: "key1234"}
+Payload : {iss: "issuer", sub: "subject", aud: "audience",\n exp: 1516239022, nbf: 1516235422, iat: 1516235722,\n jti: "token12345", name: "John Doe", admin: true}
+Signature : Encoded Signature
+
+Header -right- Payload
+Payload -right- Signature
+@enduml
