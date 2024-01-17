@@ -1,0 +1,33 @@
+@startuml
+!theme cerulean-outline
+
+scale 2
+
+mainframe gRPC Workflow
+
+
+box "Client App" 
+actor ClientActor
+participant "GrpcClient" as ClientImpl
+end box
+
+box "Server App" 
+participant "GrpcServer" as ServerImpl
+participant "RemoteCalculatorImpl" as Calculator
+end box
+
+ClientActor -> ClientImpl: Call sum()
+activate ClientImpl
+ClientImpl -> ServerImpl: RPC Request
+activate ServerImpl
+ServerImpl -> Calculator: sum()
+activate Calculator
+Calculator -> ServerImpl: result
+deactivate Calculator
+ServerImpl -> ClientImpl: RPC Response
+deactivate ServerImpl
+ClientImpl -> ClientActor: Return result
+deactivate ClientImpl
+
+@enduml
+
