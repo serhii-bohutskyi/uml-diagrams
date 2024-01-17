@@ -1,0 +1,32 @@
+@startuml
+!theme cerulean-outline
+
+scale 2
+
+mainframe gRPC Workflow
+
+participant "Client" as C
+participant "DNS Server" as DNS
+participant "gRPC Server" as S
+
+C -> DNS : Resolve Server's DNS Name
+DNS -> C : Return IP Address
+C -> S : Establish TCP Connection
+note over C,S : Optional TLS Handshake for\nSecure gRPC
+C -> S : HTTP/2 Handshake
+note right of C : HTTP/2 Connection Established
+
+== gRPC Call ==
+C -> S : [HTTP/2 Stream] Initiate RPC Call
+activate C
+activate S
+C -> C : Serialize Request (Protobuf)
+C -> S : [HTTP/2 DATA Frame] Send Serialized Request
+S -> S : Deserialize Request
+S -> S : Process Request
+S -> S : Serialize Response
+S -> C : [HTTP/2 DATA Frame] Send Serialized Response
+C -> C : Deserialize Response
+deactivate C
+deactivate S
+@enduml
